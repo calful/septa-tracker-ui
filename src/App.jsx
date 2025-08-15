@@ -1,35 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+// Components
+import RoutesList from "./components/RoutesList";
+import VehiclesView from "./components/VehiclesView";
+
+export default function App() {
+  const [selectedRoute, setSelectedRoute] = useState(null);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
+    <div className="container">
+      <h1>SEPTA Real‑Time</h1>
+      <p style={{ color: "#555" }}>
+        Pick a route, then view live vehicles (table or map).
       </p>
-    </>
-  )
-}
 
-export default App
+      <div className="grid">
+        <div>
+          <h3>Routes</h3>
+          <RoutesList onSelect={setSelectedRoute} />
+        </div>
+
+        <div>
+          <h3>{selectedRoute ? `Vehicles: ${selectedRoute}` : "Vehicles"}</h3>
+          <VehiclesView routeId={selectedRoute} />
+        </div>
+      </div>
+    </div>
+  );
+}
